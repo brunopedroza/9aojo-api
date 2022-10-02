@@ -35,9 +35,9 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
         ordemServico.setServicos(servicos);
 
         if(!ordemServico.temServicosMin()){
-            throw new Exception();
+            throw new Exception("Não há serviços listados nesta OS, adicione serviços e tente novamente.");
         } else if (ordemServico.ultrapassaServicosMax()){
-            throw new Exception();
+            throw new Exception("Quantidade máxima de 15 serviços excedida.");
         }
         ordemServicoRepository.save(ordemServico);
 
