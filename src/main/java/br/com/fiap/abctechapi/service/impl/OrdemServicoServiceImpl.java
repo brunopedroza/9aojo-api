@@ -1,5 +1,7 @@
 package br.com.fiap.abctechapi.service.impl;
 
+import br.com.fiap.abctechapi.handler.exception.MaximoServicosPorOsException;
+import br.com.fiap.abctechapi.handler.exception.MinimoServicosPorOsException;
 import br.com.fiap.abctechapi.model.OrdemServico;
 import br.com.fiap.abctechapi.model.Servico;
 import br.com.fiap.abctechapi.repository.OrdemServicoRepository;
@@ -35,9 +37,9 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
         ordemServico.setServicos(servicos);
 
         if(!ordemServico.temServicosMin()){
-            throw new Exception("Não há serviços listados nesta OS, adicione serviços e tente novamente.");
+            throw new MinimoServicosPorOsException("Lista de serviços inválida","Não há serviços listados nesta OS, adicione pelo menos 1 serviço e tente novamente.");
         } else if (ordemServico.ultrapassaServicosMax()){
-            throw new Exception("Quantidade máxima de 15 serviços excedida.");
+            throw new MaximoServicosPorOsException("Lista de serviços inválida","Quantidade máxima de 15 serviços excedida.");
         }
         ordemServicoRepository.save(ordemServico);
 

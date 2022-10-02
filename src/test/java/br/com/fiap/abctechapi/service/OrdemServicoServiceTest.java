@@ -1,5 +1,7 @@
 package br.com.fiap.abctechapi.service;
 
+import br.com.fiap.abctechapi.handler.exception.MaximoServicosPorOsException;
+import br.com.fiap.abctechapi.handler.exception.MinimoServicosPorOsException;
 import br.com.fiap.abctechapi.model.OrdemServico;
 import br.com.fiap.abctechapi.model.Servico;
 import br.com.fiap.abctechapi.repository.OrdemServicoRepository;
@@ -47,7 +49,7 @@ public class OrdemServicoServiceTest {
         OrdemServico novaOs = new OrdemServico();
         novaOs.setIdPrestador(111L);
 
-        Assertions.assertThrows(Exception.class,() -> ordemServicoService.salvarOrdemServico(novaOs, List.of()));
+        Assertions.assertThrows(MinimoServicosPorOsException.class,() -> ordemServicoService.salvarOrdemServico(novaOs, List.of()));
         verify(ordemServicoRepository, times(0)).save(novaOs);
     }
 
@@ -56,7 +58,7 @@ public class OrdemServicoServiceTest {
         OrdemServico novaOs = new OrdemServico();
         novaOs.setIdPrestador(999L);
 
-        Assertions.assertThrows(Exception.class, () -> ordemServicoService.salvarOrdemServico(novaOs, List.of(1L,2L,3L,4L,5L,6L,7L,8L,9L,10L,11L,12L,13L,14L,15L,16L)));
+        Assertions.assertThrows(MaximoServicosPorOsException.class, () -> ordemServicoService.salvarOrdemServico(novaOs, List.of(1L,2L,3L,4L,5L,6L,7L,8L,9L,10L,11L,12L,13L,14L,15L,16L)));
         verify(ordemServicoRepository, times(0)).save(novaOs);
     }
 
