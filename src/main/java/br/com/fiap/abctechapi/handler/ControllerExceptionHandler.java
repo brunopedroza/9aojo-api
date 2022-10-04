@@ -2,6 +2,7 @@ package br.com.fiap.abctechapi.handler;
 
 import br.com.fiap.abctechapi.handler.exception.MaximoServicosPorOsException;
 import br.com.fiap.abctechapi.handler.exception.MinimoServicosPorOsException;
+import br.com.fiap.abctechapi.handler.exception.ServicoIdNaoEncontradoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,6 +20,11 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(MaximoServicosPorOsException.class)
     public ResponseEntity<ErrorMessageResponse> errorMaxServicosAllowed(MaximoServicosPorOsException exception){
+        return getErrorMessageResponseResponseEntity(exception.getMessage(), exception.getDescription(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ServicoIdNaoEncontradoException.class)
+    public ResponseEntity<ErrorMessageResponse> errorServicoIdNaoEncontrado(ServicoIdNaoEncontradoException exception){
         return getErrorMessageResponseResponseEntity(exception.getMessage(), exception.getDescription(), HttpStatus.BAD_REQUEST);
     }
     private ResponseEntity<ErrorMessageResponse> getErrorMessageResponseResponseEntity(String message, String description, HttpStatus statusCode) {

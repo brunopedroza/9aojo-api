@@ -2,6 +2,7 @@ package br.com.fiap.abctechapi.service.impl;
 
 import br.com.fiap.abctechapi.handler.exception.MaximoServicosPorOsException;
 import br.com.fiap.abctechapi.handler.exception.MinimoServicosPorOsException;
+import br.com.fiap.abctechapi.handler.exception.ServicoIdNaoEncontradoException;
 import br.com.fiap.abctechapi.model.OrdemServico;
 import br.com.fiap.abctechapi.model.Servico;
 import br.com.fiap.abctechapi.repository.OrdemServicoRepository;
@@ -30,7 +31,7 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
     public void salvarOrdemServico(OrdemServico ordemServico, List<Long> arrayServicos) throws Exception {
         ArrayList<Servico> servicos = new ArrayList<>();
         arrayServicos.forEach( i -> {
-            Servico servico = servicoRepository.findById(i).orElseThrow();
+            Servico servico = servicoRepository.findById(i).orElseThrow(() -> new ServicoIdNaoEncontradoException("ID do serviço não encontrada","Insira somente IDs de serviços válidas"));
             servicos.add(servico);
         });
 
@@ -48,5 +49,6 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
     @Override
     public List<OrdemServico> listarOsPorPrestador(Long idPrestador) {
         return null;
+          //ordemServicoRepository.findById(idPrestador).orElseThrow();
     }
 }
