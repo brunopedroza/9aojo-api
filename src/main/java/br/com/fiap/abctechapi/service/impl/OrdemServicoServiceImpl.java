@@ -48,7 +48,7 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
 
     @Override
     public List<OrdemServico> listarOsPorPrestador(Long idPrestador) {
-        return null;
-          //ordemServicoRepository.findById(idPrestador).orElseThrow();
+        return ordemServicoRepository.getOsByIdPrestador(idPrestador);
+
     }
 }
